@@ -99,7 +99,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -343,8 +343,8 @@ do
   --
   -- We first install it from https://github.com/NMAC427/guess-indent.nvim
   -- and then call its `setup()` function to start it with default settings.
-  vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
-  require('guess-indent').setup {}
+  -- vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
+  -- require('guess-indent').setup {}
 
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
@@ -977,6 +977,10 @@ do
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   -- require 'custom.plugins'
+  require 'custom.options'
+  require 'custom.keybinds'
+  require 'custom.plugins.fugitive'
+  require 'custom.plugins.sleuth'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
