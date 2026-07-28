@@ -872,6 +872,17 @@ do
 
     sources = {
       default = { 'lsp', 'path', 'snippets' },
+
+      per_filetype = {
+        sql = { 'snippets', 'dadbod', 'buffer' },
+      },
+
+      providers = {
+        dadbod = {
+          name = "Dadbod",
+          module = "vim_dadbod_completion.blink",
+        },
+      },
     },
 
     snippets = { preset = 'luasnip' },
@@ -981,6 +992,7 @@ do
   require 'custom.keybinds'
   require 'custom.plugins.fugitive'
   require 'custom.plugins.sleuth'
+  require 'custom.plugins.dadbod'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
