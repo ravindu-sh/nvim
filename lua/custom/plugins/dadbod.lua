@@ -4,22 +4,33 @@ vim.pack.add {
   'https://github.com/kristijanhusak/vim-dadbod-ui',
 }
 
--- Execute visual SQL selection using the buffer-scoped b:db variable
-vim.keymap.set('v', '<leader>db', function()
-  -- Check if a buffer-local db variable exists
-  if not vim.b.db then
-    vim.notify('No b:db variable set for this buffer!', vim.log.levels.ERROR)
+vim.keymap.set({'n', 'v'}, '<leader>dr', function()
+  local db_url = vim.w.db or vim.t.db or vim.b.db or vim.g.db
+
+  if not db_url or db_url == '' then
+    vim.notify('No active database found', vim.log.levels.ERROR)
     return
   end
 
-  -- Feed keys to exit visual mode, which forces Neovim to set the '< and '> marks
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'x', false)
+  local start_line, end_line
 
-  -- Retrieve the validated mark line numbers
-  local start_line = vim.fn.getpos("'<")[2]
-  local end_line = vim.fn.getpos("'>")[2]
+  if vim.fn.mode():match('[vV\22]') then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'x', false)
+    start_line = vim.fn.getpos("'<")[2]
+    end_line = vim.fn.getpos("'>")[2]
+  else
+    start_line = 1
+    end_line = vim.fn.line('$')
+  end
 
-  -- Construct and execute the command safely
-  vim.cmd(string.format('%d,%dDB %s', start_line, end_line, vim.b.db))
-end, { desc = 'Execute selected SQL using buffer b:db', silent = true })
+  vim.cmd(string.format('%d,%dDB %s', start_line, end_line, db_url))
+end, { desc = 'Execute SQL', silent = true })
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'dbout',
+  callback = function()
+    vim.opt_local.foldenable = false
+    vim.opt_local.foldlevel = 99
+    vim.opt_local.wrap = false
+  end,
+})

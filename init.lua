@@ -879,8 +879,8 @@ do
 
       providers = {
         dadbod = {
-          name = "Dadbod",
-          module = "vim_dadbod_completion.blink",
+          name = 'Dadbod',
+          module = 'vim_dadbod_completion.blink',
         },
       },
     },
