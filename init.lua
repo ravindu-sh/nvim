@@ -385,6 +385,7 @@ do
   vim.pack.add { gh 'folke/tokyonight.nvim' }
   ---@diagnostic disable-next-line: missing-fields
   require('tokyonight').setup {
+    transparent = true,
     styles = {
       comments = { italic = false }, -- Disable italics in comments
     },
@@ -759,6 +760,7 @@ do
   -- You can press `g?` for help in this menu.
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
+    'sqlfmt',
     -- You can add other tools here that you want Mason to install
   })
 
@@ -796,6 +798,7 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
+      sql = { 'sqlfmt' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
@@ -993,6 +996,8 @@ do
   require 'custom.plugins.fugitive'
   require 'custom.plugins.sleuth'
   require 'custom.plugins.dadbod'
+  require 'custom.plugins.undotree'
+  require 'custom.plugins.opencode'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
